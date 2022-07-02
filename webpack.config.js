@@ -47,8 +47,19 @@ module.exports = {
   // 出口文件必须写绝对路径
   output: {
     filename: "js/index.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "",
+    path: path.resolve(__dirname, "dist"), // 指定打包后资源位置
+    publicPath: "/dist",
+  },
+  devServer: {
+    open: false,
+    port: 3300,
+    hot: true,
+    hotOnly: true,
+    compress: true, // 是否开启 gzip 压缩
+    publicPath: "/dist",
+    contentBase: path.resolve(__dirname, "public"), // 对于直接访问打包后的资源，设置该参数的意义不大
+    watchContentBase: true, // 监测 contentBase 指向文件是否发生了改变， 默认：false
+    historyApiFallback: true, // 当页面产生404响应时，将页面重定向到index.html
   },
   devServer: {
     hot: true,

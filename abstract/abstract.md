@@ -287,7 +287,7 @@
        */
       ```
 
-4. `webpack-dev-server` ：监测本地数据是否发生了改变并主动更新数据
+4. `webpack-dev-server` ：监测**本地**数据是否发生了改变并主动更新数据
 
    1. 以下两种方式都会在文件发生变化后对源代码进行整体的重新编译，对文件再次进行读写不能进行局部编译，存在不必要消耗；
 
@@ -302,20 +302,39 @@
       ```js
       // webpack.config.js
       devServer:　{
-      	hot: true,  // 开启热更新
+      	// 指定开启端口号，默认：8080
+        port: 3300,
+        // 是否在数据发生变化后自动开启新窗口
+        open: false,
+        // 开启热更新
+      	hot: true,
+        // 只对发生变化的数据进行热更新，如果不开启hotOnly当我们某一个组件发生数据书写错误而再次修正时，会导致页面全部内容的刷新，从而丢失其他组件已经编辑后的信息
+        hotOnly: true,
+        /**
+        	指定本地服务所在的目录
+        	当指定一个路径时，由于插件监测的时本地数据，所以同样需要修改output中的publicPath路径为相同地址，以便在打包后以正确`	的路径寻找打包资源；
+        */
+        publicPath: '', // 当为空字符串时，效果等同于output中的publicPath，会被自动补全为 /
+        /**
+        	对于直接访问打包后的资源，该属性存在的意义不大
+      		PC：当index.js引用的文件并未被进行打包，产出文件找不到目标地址时使用；
+        */
+        contentBase: '', // 绝对路径
+        watchContentBase: true, // 监测 contentBase 指向文件是否发生了改变， 默认：false
+        historyApiFallback: true, // 当页面产生404响应时，将页面重定向到index.html
       }
       
       // 入口文件：index.js
-      if (module.hot){
-      	module.hot.accept(['./xxxx','./yyyy'], ( )=>{
-          
-        })
-      }
       /**
       	.accept() 接收两个参数：
       	参数一：以数组的形式接收要使用热更新的模块；
       	参数二：触发后执行的回调
       */
+      if (module.hot){
+      	module.hot.accept(['./xxxx','./yyyy'], ( )=>{
+          
+        })
+      }
       ```
 
       
