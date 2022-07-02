@@ -40,6 +40,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
+  target: "web", // 开发环境下，关闭 .browserslistrc
   devtool: false,
   // 入口文件可以写相对路径
   entry: "./src/main.js",
@@ -47,6 +48,10 @@ module.exports = {
   output: {
     filename: "js/index.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "",
+  },
+  devServer: {
+    hot: true,
   },
   // 规则模块
   module: {
