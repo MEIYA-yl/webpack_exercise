@@ -1,0 +1,36 @@
+@import "./test.css";
+
+.fontColor {
+  color: #008c8c50;
+}
+
+.bgimg {
+  width: 100px;
+  height: 200px;
+  background: url(../img/34.jpg);
+}
+
+@font-face {
+  font-family: "iconfont";
+  /* Project id 2737146 */
+  src: url("//at.alicdn.com/t/c/font_2737146_askssqtga37.woff2?t=1664931268458")
+      format("woff2"),
+    url("//at.alicdn.com/t/c/font_2737146_askssqtga37.woff?t=1664931268458")
+      format("woff"),
+    url("//at.alicdn.com/t/c/font_2737146_askssqtga37.ttf?t=1664931268458")
+      format("truetype");
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: red;
+}
+.icon-haizhe:before {
+  content: "\e69c";
+}
+.icon--:before {
+  content: "\e61f";
+}
