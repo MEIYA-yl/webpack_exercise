@@ -29,13 +29,13 @@
    				}
    			]
    		}
-   
+
    	// 方式二：目标文件只使用一个loader且不需要额外的配置
    		{
    			test: /\.css/,
    			loader: 'css-loader'
    		}
-   
+
    	// 方式三：目标文件会用到多个loader但loader不需要额外的配置
    		{
    			test: /\.css/,
@@ -67,10 +67,10 @@
 
 #### `postcss 工作流程`
 
-- 主要是做css的兼容性处理，postcss 是什么？帮助我们通过JavaScript转换样式；
+- 主要是做 css 的兼容性处理，postcss 是什么？帮助我们通过 JavaScript 转换样式；
 
-- 环境：`pnpm i postcss -D` ，通过`pnpm i postcss-cli -D` 来在终端中使用postcss命令；
-- 安装`postcss loader` 通过配置文件，简化postcss依赖的使用步骤；
+- 环境：`pnpm i postcss -D` ，通过`pnpm i postcss-cli -D` 来在终端中使用 postcss 命令；
+- 安装`postcss loader` 通过配置文件，简化 postcss 依赖的使用步骤；
 
 1. 配置文件中的使用方式：
 
@@ -88,7 +88,7 @@
    },
    ```
 
-2. 配置单独的postcss文件：postcss.config.js ，减少文件冗余；说明文档：https://github.com/postcss/postcss/blob/HEAD/docs/README-cn.md
+2. 配置单独的 postcss 文件：postcss.config.js ，减少文件冗余；说明文档：https://github.com/postcss/postcss/blob/HEAD/docs/README-cn.md
 
 - 插件：
 
@@ -96,13 +96,13 @@
 
   - 搭配 `pnpm i autoprefixer -D` （提供厂商前缀）来使用；
 
-  - 搭配 `file-loader` 来使用，1. 当我们将图片作为模块来使用时，装换成一个  js 可以识别的内容；2. 将指定的二进制文件拷贝到指定的目录，没有指定将拷贝到打包文件下；
+  - 搭配 `file-loader` 来使用，1. 当我们将图片作为模块来使用时，装换成一个 js 可以识别的内容；2. 将指定的二进制文件拷贝到指定的目录，没有指定将拷贝到打包文件下；
 
     1. 由于图片返回的是一个对象，所以需要进行获取：
 
        - 方式一：file-loader 默认返回一个对象，通过 default 这个键来修正参数；
 
-       - 方式二：配置loader参数：
+       - 方式二：配置 loader 参数：
 
          ```js
          {
@@ -115,7 +115,7 @@
 
        - 方式三：采用 ejs 的模块化导入方式
 
-       - 方式四：采用 background:url() 的方式，但是这里会出现方式一的问题（不是file-loader）,由于postcss-loader是可以解析css文件的，但是在设置路径的时候拿到的是一个对象，它默认以cjs模块化语法导入；
+       - 方式四：采用 background:url() 的方式，但是这里会出现方式一的问题（不是 file-loader）,由于 postcss-loader 是可以解析 css 文件的，但是在设置路径的时候拿到的是一个对象，它默认以 cjs 模块化语法导入；
 
     2. 自定义输出文件地址、文件名：
 
@@ -134,8 +134,6 @@
        },
        ```
 
-       
-
        - [ext]：文件扩展名
 
        - [name]：文件名
@@ -144,11 +142,11 @@
 
        - [contentHash]：等同于 [hash]
 
-       - [hash]：限制hash值的长度 （没有对输出文件进行配置时，输出的文件名即文件内容hsah所组成的文件名）
+       - [hash]：限制 hash 值的长度 （没有对输出文件进行配置时，输出的文件名即文件内容 hsah 所组成的文件名）
 
        - [path]：
 
-  - 搭配 `url-loader` 实现类似于 file-loader 的功能，但是它不会产生图片文件，而是将图片文件以base64 uri的方式加载到代码中；
+  - 搭配 `url-loader` 实现类似于 file-loader 的功能，但是它不会产生图片文件，而是将图片文件以 base64 uri 的方式加载到代码中；
 
     ```js
     {
@@ -171,13 +169,13 @@
 
     3. 可以通过 limit 参数限制是否对图片资源进行缓存，且对缓存范围进行限制
 
-  - `asset` **资源类型模块，替代了url-loader和file-loder，同时在最新的webpack5中以被内置。**
+  - `asset` **资源类型模块，替代了 url-loader 和 file-loder，同时在最新的 webpack5 中以被内置。**
 
-    1. asset/resource   - file-loader
+    1. asset/resource - file-loader
 
        ```js
        output: { assetModuleFilename: "img/[name].[hash:4][ext]", }// 指定 asset 所指定的资源，一般不会这么做，这将导致所有不同类型的文件都被打包到同一文件地址中
-       
+
        // 处理图片类型资源
        {
          test: /\.(png|svg|gif|jpe?g)$/,
@@ -187,7 +185,7 @@
                filename: "img/[name].[hash:4][ext]",
              },
        },
-         
+
        // 处理字体图标
        {
          test: /\.(ttf|woff2?)$/,
@@ -197,9 +195,9 @@
              },
        },
        ```
-    
-    2. asset/inline        - url-loader
-    
+
+    2. asset/inline - url-loader
+
        ```js
        {
          test: /\.(png|svg|gif|jpe?g)$/,
@@ -217,19 +215,17 @@
                },
        },
        ```
-    
-       
-    
-    3. asset/source      - raw-loader
-    
+
+    3. asset/source - raw-loader
+
     4. ...
 
 - postcss 的使用：
 
-  - `npx postcss -o file_name ./path` -o 即 output 输出，将指定的文件输出到  **file_name** 文件夹下；
+  - `npx postcss -o file_name ./path` -o 即 output 输出，将指定的文件输出到 **file_name** 文件夹下；
   - `npx postcss --use autoprefixer -o file_name ./path` 为 **file_name** 文件搭配厂商前缀；
 
-## webpack plugin 
+## webpack plugin
 
 **插件的本质是一个类**
 
@@ -239,17 +235,17 @@
 
 2. `pnpm i @babel/core D`：Babel 核心模块包；
 
-   - 构建 Babel 环境依赖：`pnpm i @babel/preset-env -D` 可以处理绝大多数的js语法处理；
+   - 构建 Babel 环境依赖：`pnpm i @babel/preset-env -D` 可以处理绝大多数的 js 语法处理；
 
-   1. 在使用Babel时常见的问题：
+   1. 在使用 Babel 时常见的问题：
 
-      - 在使用`@babel/preset-env`时，因为兼容的问题（在4版本中不会，在5新的版本中需要按需导入）会出现部分语法的未转义现象，此时进行按需引入：
+      - 在使用`@babel/preset-env`时，因为兼容的问题（在 4 版本中不会，在 5 新的版本中需要按需导入）会出现部分语法的未转义现象，此时进行按需引入：
 
         ```js
         // babel.config.js
         presets: [
           [
-            '@babel/preset-env',
+            "@babel/preset-env",
             {
               /**
               	false: 不对当前的JS处理做 polyfill 的填充
@@ -259,15 +255,19 @@
               		import 'core-js/stable'  // 做语法功能
               		import 'regenerator-runtime/runtime'  // 做新语法规范：symbol 等
               */
-              useBuiltIns: 'entry',  // 为所要适配的低版本浏览器支持当前代码中js的新语法
-           	  corejs: 3, // 由于这种配置方式对 core.js 有版本上的要求，但是Babel默认使用2的版本所以需要指定到高版本来使用
-            }
-          ]
-        ]
+              useBuiltIns: "entry", // 为所要适配的低版本浏览器支持当前代码中js的新语法
+              corejs: 3, // 由于这种配置方式对 core.js 有版本上的要求，但是Babel默认使用2的版本所以需要指定到高版本来使用
+            },
+          ],
+        ];
         ```
-
-        
 
 #### 内置插件：
 
-1. `const { DefinePlugin } = require("webpack");` ：自定义HTML模板内容；
+1. # `const { DefinePlugin } = require("webpack");` ：自定义 HTML 模板内容；
+
+# webpack_exercise
+
+Familiar with Webpack syntax environment
+
+> > > > > > > remotes/origin/main
