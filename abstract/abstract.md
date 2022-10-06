@@ -264,4 +264,4 @@
 
 #### 内置插件：
 
-1. # `const { DefinePlugin } = require("webpack");` ：自定义 HTML 模板内容;
+1. `const { DefinePlugin } = require("webpack");` ：自定义 HTML 模板内容;

@@ -1,7 +1,7 @@
 {
   "name": "wp",
   "version": "1.0.0",
-  "description": "",
+  "description": "familiar with Webpack syntax specification in practice",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
