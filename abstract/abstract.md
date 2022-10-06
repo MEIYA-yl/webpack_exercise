@@ -283,8 +283,40 @@
        */
       ```
 
+4. `webpack-dev-server` ：监测本地数据是否发生了改变并主动更新数据
+
+   1. 以下两种方式都会在文件发生变化后对源代码进行整体的重新编译，对文件再次进行读写不能进行局部编译，存在不必要消耗；
+
+      - 在 package.json 文件中开启 **watch** 属性，默认为false；
+
+      - 在 config 配置文件中 build 命令中添加 --watch 命令；
+
+   2. 所有和插件相关的配置都可以通过 cinfig 文件中配置，写在 `devServer: {}` 选项中；
+
+      - 另外在使用热更新时，需要在入口文件中特别判断：
+
+      ```js
+      // webpack.config.js
+      devServer:　{
+      	hot: true,  // 开启热更新
+      }
+      
+      // 入口文件：index.js
+      if (module.hot){
+      	module.hot.accept(['./xxxx','./yyyy'], ( )=>{
+          
+        })
+      }
+      /**
+      	.accept() 接收两个参数：
+      	参数一：以数组的形式接收要使用热更新的模块；
+      	参数二：触发后执行的回调
+      */
+      ```
+
       
 
+5. `webpack-dev-middleware` ：自定义服务端启动命令，自由度更高。需要搭配 **express** 进行使用；
 
 #### 内置插件：
 
