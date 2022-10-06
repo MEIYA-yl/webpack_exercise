@@ -261,8 +261,30 @@
           ],
         ];
         ```
-   
-3. `copy-webpack-plugin`：将 public 本地静态资源文件拷贝到webpack打包之后的静态资源目录；
+
+3. `copy-webpack-plugin`：将 public 本地静态资源文件（本身资源不需要打包）拷贝到webpack打包之后的静态资源目录；
+
+   1. 使用方式及常见问题：
+
+      ```js
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: "public",
+            globOptions: {
+              ignore: ["**/index.html"], // **/ 代表从当前 public 指定的目录下查找文件
+            },
+          },
+        ],
+      }),
+        
+       /**
+       		一般不会指定复制到某个地址：to: "./xxx"，不指定时会被默认指向到输出目录下，避免了输出目录地址和指定地址的修改；
+       */
+      ```
+
+      
+
 
 #### 内置插件：
 

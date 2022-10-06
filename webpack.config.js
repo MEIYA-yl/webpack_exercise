@@ -2,8 +2,7 @@ const path = require("path"); // node 下的一个包，控制路径相关模块
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { env } = require("process");
-
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 // commonJS语法
 // module.exports = {
 //   mode: "development", // 开发模式
@@ -46,7 +45,7 @@ module.exports = {
   entry: "./src/main.js",
   // 出口文件必须写绝对路径
   output: {
-    filename: "index.js",
+    filename: "js/index.js",
     path: path.resolve(__dirname, "dist"),
   },
   // 规则模块
@@ -107,6 +106,16 @@ module.exports = {
     }),
     new DefinePlugin({
       BASE_URL: '"./"',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "public",
+          globOptions: {
+            ignore: ["**/index.html"], // **/ 代表从当前 public 指定的目录下查找文件
+          },
+        },
+      ],
     }),
   ],
 };
