@@ -53,6 +53,9 @@ module.exports = {
   devServer: {
     hot: true,
   },
+  devServer: {
+    hot: true,
+  },
   // 规则模块
   module: {
     rules: [
