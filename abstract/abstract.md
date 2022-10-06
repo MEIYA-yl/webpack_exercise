@@ -29,13 +29,13 @@
    				}
    			]
    		}
-
+   
    	// 方式二：目标文件只使用一个loader且不需要额外的配置
    		{
    			test: /\.css/,
    			loader: 'css-loader'
    		}
-
+   
    	// 方式三：目标文件会用到多个loader但loader不需要额外的配置
    		{
    			test: /\.css/,
@@ -261,6 +261,8 @@
           ],
         ];
         ```
+   
+3. `copy-webpack-plugin`：将 public 本地静态资源文件拷贝到webpack打包之后的静态资源目录；
 
 #### 内置插件：
 
