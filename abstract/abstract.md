@@ -9,6 +9,7 @@
    - publicPath: 打包后 index.html 的内部引用路径。
      - publicPath 参数：空字符串，相当于 / 会被服务器自动拼接到路径当中。如果想手动写入，则需要写成 './' 的方式，以相对路径的方式访问；
      - 打包后的访问路劲以 域名 + publicPath + filename 进行拼接；
+5. 自定义指令，在通过tsc对ts文件进行语法检查时，建议写为 "tsc --noEmit" ，（--noEmit：对文件存在语法或其他某种错误执行指令后，不产生新文件）对文件在打包之前实现语法的校验工作；对ts来说：Babel-loader 做polifile填充，ts-loader 做语法校验；
 
 ## webpack loader
 
@@ -301,11 +302,14 @@
 
       ```js
       // webpack.config.js
+      // 注意： devServer 在生产环境用不上
       devServer:　{
       	// 指定开启端口号，默认：8080
         port: 3300,
         // 是否在数据发生变化后自动开启新窗口
         open: false,
+        // source-map 类型设置：默认为eval，"source-map" 对错误信息进行精确映射，
+        devtool: 'cheap-module-source-map', // 精确到行且提供未转义前的代码
         // 开启热更新
       	hot: true,
         // 只对发生变化的数据进行热更新，如果不开启hotOnly当我们某一个组件发生数据书写错误而再次修正时，会导致页面全部内容的刷新，从而丢失其他组件已经编辑后的信息
@@ -336,7 +340,7 @@
         })
       }
       ```
-
+      
       
 
 5. `webpack-dev-middleware` ：自定义服务端启动命令，自由度更高。需要搭配 **express** 进行使用；

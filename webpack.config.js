@@ -40,10 +40,10 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  target: "web", // 开发环境下，关闭 .browserslistrc
-  devtool: false,
   // 入口文件可以写相对路径
   entry: "./src/main.js",
+  devtool: "source-map", // 默认为：eval
+  target: "web", // 开发环境下，关闭 .browserslistrc
   // 出口文件必须写绝对路径
   output: {
     filename: "js/index.js",
@@ -52,7 +52,7 @@ module.exports = {
   },
   devServer: {
     open: false,
-    port: 3300,
+    port: 4000,
     hot: true,
     hotOnly: true,
     compress: true, // 是否开启 gzip 压缩
