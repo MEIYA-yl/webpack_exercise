@@ -348,3 +348,85 @@
 #### 内置插件：
 
 1. `const { DefinePlugin } = require("webpack");` ：自定义 HTML 模板内容;
+
+## 其他配置：优化
+
+### 代码拆分
+
+1. 多入口多打包文件；
+
+2. 将模块依赖单独打包: 多入口的拆包方式
+
+   ```js
+   // webpack.config.js
+   
+   entry: {
+     main: { import: './src/main.js', dependOn: 'lodash' },
+     lodash: 'lodash',
+       
+     // 当依赖了多个包时：可以将需拆分的模块写成数组引入
+     index: { import: './src/index.js', dependOn: 'shared' }
+     shared: ['lodash', 'jquery']
+   }
+   ```
+
+3. 通过 Optimization 进行精细优化：单入口的拆包方式 https://webpack.docschina.org/configuration/optimization/#optimizationsplitchunks
+
+   ```js
+   entry: {
+     index: './src/index.js'
+   }
+   
+   optimization: {
+     minimizer: [
+       new TerserPlugin ({
+         extractComments: false,
+       }),
+     ],
+     // 配置 splitChunks 进行精细化自定以设置
+     splitCunks: {
+   		chunks: 'all', // 默认 async异步打包（对于同步导入的不会被识别，则不会产生拆包），initial 同步、all全部
+     	minSize: 20000, // 默认值: 20000(约等于20kb)，如果被拆分的包并未达到设置的大小，则并不会被拆出来而是依旧被包含在出口文件内
+    		maxSize: 20000, // 当拆包文件大于 20kb 时，按照minSize规定大小拆分
+       // minChunks: 1, // 当目标依赖包需要被拆分成包，该文件必须被引用过 1 次，一般不会和minSize、maxSize同时使用
+       
+      // 其他配置具体详细信息：https://webpack.docschina.org/plugins/split-chunks-plugin/
+     }
+   }
+   ```
+
+###　import动态导入
+
+- `import ()` 动态导入相当于配置了splitCunks chunks 为asycn 做了异步打包
+
+- 常用参数，其他配置详细信息： https://webpack.docschina.org/configuration/optimization/
+
+  ```js
+  optimization: {
+    chunkIds: 'named', 
+  }
+  
+  'natural' : 当前打包产物名称按照自然数进行编号排序，如果某个文档当前次不再被依赖那么重新打包时序号都会变。这将导致会被重新缓存，所以不利于浏览器的缓存机制，所以我们一般不去使用
+  'named'  :  按照文件模块名称进行打包，在开发环境下介意使用，可以清除知道来源
+  ```
+
+  
+
+### runtimeChunk 优化配置
+
+- 其他配置详细信息：https://webpack.docschina.org/configuration/optimization/#optimizationruntimechunk
+
+  ```js
+  optimization: {
+    runtimeChunk: true, // 会将运行、模块加载和解析的部分拆分出来。该部分内容所包含的是类似于清单性的信息，记录了当前模块如何b被导入、导出的一些信息，便于浏览器做长期的缓存。
+  }
+  
+  // 当在多入口打包场景中：配置了多入口，并对统一文件进行了引用时，使用'true'会为每一个入口配置一份信息，使用'single'只会打包一份出来。
+  ```
+
+  
+
+###　术语：
+
+　1. chunk :  依赖
+　1. bundle  :  html 可以直接导入的资源
