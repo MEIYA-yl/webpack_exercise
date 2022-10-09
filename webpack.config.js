@@ -3,40 +3,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-// commonJS语法
-// module.exports = {
-//   mode: "development", // 开发模式
-
-//   entry: path.join(__dirname, "src", "index.js"), // 打包文件的入口 .join(webpack.config的当前目录, 目标目录, 文件名)
-
-//   output: {
-//     path: path.join(__dirname, "dist"), // 文件打包位置
-//     filename: "bundle.js", // 打包的文件名
-//   }, // 出口文件
-
-//   module: {
-//     rules: [
-//       {
-//         test: /\.js$/, // 规则触发时期
-//         loader: "babel-loader", // 通过插件对代码进行编译
-//         include: path.join(__dirname, "src"), // 需要处理的文件
-//         exclude: /node_modules/, //排除不需要处理的文件
-//       },
-//     ], // 配置解析模块的规则
-//   },
-
-//   plugins: [
-//     new HtmlWebPackPlugin({
-//       template: path.join(__dirname, "src", "index.html"), // html 打包后的模板文件
-//       filename: "index.html", // 打包的文件名
-//     }),
-//   ], // 实例化插件：使用插件
-
-//   devServer: {
-//     port: 8000,
-//     static: path.join(__dirname, "dist"), // 静态资源目录
-//   },
-// };
 
 module.exports = {
   mode: "development",
@@ -60,9 +26,6 @@ module.exports = {
     contentBase: path.resolve(__dirname, "public"), // 对于直接访问打包后的资源，设置该参数的意义不大
     watchContentBase: true, // 监测 contentBase 指向文件是否发生了改变， 默认：false
     historyApiFallback: true, // 当页面产生404响应时，将页面重定向到index.html
-  },
-  devServer: {
-    hot: true,
   },
   // 规则模块
   module: {

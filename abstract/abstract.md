@@ -1,5 +1,9 @@
 # WebPack
 
+## 如何理解webpack底层逻辑：
+
+- webpack通常可以分为流程类或工具类，流程类配置项通常会直接影响webpack打包的编译的规则，涵盖整个项目的生命周期；而工具类相对比较独立，通常用于在编译主流程之外提供额外的工程化能力，基本上一种配置项解决一种工程化问题；
+
 ## webpack 基础配置
 
 1. npx webpack --entry ./src/filename.js // 修改默认入口文件路径为
@@ -48,6 +52,11 @@
    		}
    ```
 
+#### `style-loader 与 mini-css-extract-plugin`
+
+1. style-loader: 内嵌的style无法并行加载，所以主要用于开发环境，将CSS抽取注入到Html的 <style> 标签当中，内嵌的CSS无法进行并行加载，会造成性能上的缺陷，从而降低页面性能；
+2. mini-css-extract-plugin: 主要用于生产环境，用于将CSS抽取成单个文件，然后以<link>的形式引入面页，<link>是并行加载资源，这个插件必须要与html-webpack-plugin插件同时使用才能生效；
+
 #### `less-loader 的使用`
 
 1. less-loader 的使用建立在 less 环境上；
@@ -72,7 +81,7 @@
 
 #### `postcss 工作流程`
 
-- 主要是做 css 的兼容性处理，postcss 是什么？帮助我们通过 JavaScript 转换样式；
+- 主要是做 css 的兼容性处理，它于css的关系类似于Babel和JavaScript的关系；
 
 - 环境：`pnpm i postcss -D` ，通过`pnpm i postcss-cli -D` 来在终端中使用 postcss 命令；
 - 安装`postcss loader` 通过配置文件，简化 postcss 依赖的使用步骤；
