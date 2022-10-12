@@ -1,8 +1,8 @@
-import "./js/css_loader";
+import "regenerator-runtime/runtime";
+import "core-js/stable";
 import "./js/image";
 import "./js/font.js";
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import "./js/css_loader";
 
 const res = (a, b) => {
   return a + b;

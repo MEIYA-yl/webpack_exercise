@@ -1,8 +1,8 @@
 const path = require("path"); // node 下的一个包，控制路径相关模块
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -14,7 +14,7 @@ module.exports = {
   output: {
     filename: "js/index.js",
     path: path.resolve(__dirname, "dist"), // 指定打包后资源位置
-    publicPath: "/dist",
+    // publicPath: "/dist",
   },
   devServer: {
     open: false,
@@ -22,9 +22,12 @@ module.exports = {
     hot: true,
     hotOnly: true,
     compress: true, // 是否开启 gzip 压缩
-    publicPath: "/dist",
-    contentBase: path.resolve(__dirname, "public"), // 对于直接访问打包后的资源，设置该参数的意义不大
-    watchContentBase: true, // 监测 contentBase 指向文件是否发生了改变， 默认：false
+    // publicPath: "/dist",
+    static: {
+      directory: path.resolve(__dirname, "public"),
+      watch: true, // 监测指向文件是否发生了改变， 默认：false
+    }, // 对于直接访问打包后的资源，设置该参数的意义不大
+
     historyApiFallback: true, // 当页面产生404响应时，将页面重定向到index.html
   },
   // 规则模块

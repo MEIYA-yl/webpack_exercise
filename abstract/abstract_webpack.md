@@ -332,7 +332,7 @@
         	对于直接访问打包后的资源，该属性存在的意义不大
       		PC：当index.js引用的文件并未被进行打包，产出文件找不到目标地址时使用；
         */
-        contentBase: '', // 绝对路径
+        static: '', // 绝对路径
         watchContentBase: true, // 监测 contentBase 指向文件是否发生了改变， 默认：false
         historyApiFallback: true, // 当页面产生404响应时，将页面重定向到index.html
       }
