@@ -1,19 +1,19 @@
 # WebPack
 
-## 如何理解webpack底层逻辑：
+## 如何理解 webpack 底层逻辑：
 
-- webpack通常可以分为流程类或工具类，流程类配置项通常会直接影响webpack打包的编译的规则，涵盖整个项目的生命周期；而工具类相对比较独立，通常用于在编译主流程之外提供额外的工程化能力，基本上一种配置项解决一种工程化问题；
+- webpack 通常可以分为流程类或工具类，流程类配置项通常会直接影响 webpack 打包的编译的规则，涵盖整个项目的生命周期；而工具类相对比较独立，通常用于在编译主流程之外提供额外的工程化能力，基本上一种配置项解决一种工程化问题；
 
 ## webpack 基础配置
 
 1. npx webpack --entry ./src/filename.js // 修改默认入口文件路径为
 2. npx webpack --output-path ./build // 修改默认出口文件路径为
 3. "build":"webpack --config filename.config.js" // 自定义 webpack 配置文件为 filename.config.js
-4. output 中的path：
+4. output 中的 path：
    - publicPath: 打包后 index.html 的内部引用路径。
      - publicPath 参数：空字符串，相当于 / 会被服务器自动拼接到路径当中。如果想手动写入，则需要写成 './' 的方式，以相对路径的方式访问；
      - 打包后的访问路劲以 域名 + publicPath + filename 进行拼接；
-5. 自定义指令，在通过tsc对ts文件进行语法检查时，建议写为 "tsc --noEmit" ，（--noEmit：对文件存在语法或其他某种错误执行指令后，不产生新文件）对文件在打包之前实现语法的校验工作；对ts来说：Babel-loader 做polifile填充，ts-loader 做语法校验；
+5. 自定义指令，在通过 tsc 对 ts 文件进行语法检查时，建议写为 "tsc --noEmit" ，（--noEmit：对文件存在语法或其他某种错误执行指令后，不产生新文件）对文件在打包之前实现语法的校验工作；对 ts 来说：Babel-loader 做 polifile 填充，ts-loader 做语法校验；
 
 ## webpack loader
 
@@ -54,8 +54,8 @@
 
 #### `style-loader 与 mini-css-extract-plugin`
 
-1. style-loader: 内嵌的style无法并行加载，所以主要用于开发环境，将CSS抽取注入到Html的 <style> 标签当中，内嵌的CSS无法进行并行加载，会造成性能上的缺陷，从而降低页面性能；
-2. mini-css-extract-plugin: 主要用于生产环境，用于将CSS抽取成单个文件，然后以<link>的形式引入面页，<link>是并行加载资源，这个插件必须要与html-webpack-plugin插件同时使用才能生效；
+1. style-loader: 内嵌的 style 无法并行加载，所以主要用于开发环境，将 CSS 抽取注入到 Html 的 <style> 标签当中，内嵌的 CSS 无法进行并行加载，会造成性能上的缺陷，从而降低页面性能；
+2. mini-css-extract-plugin: 主要用于生产环境，用于将 CSS 抽取成单个文件，然后以<link>的形式引入面页，<link>是并行加载资源，这个插件必须要与 html-webpack-plugin 插件同时使用才能生效；
 
 #### `less-loader 的使用`
 
@@ -81,7 +81,7 @@
 
 #### `postcss 工作流程`
 
-- 主要是做 css 的兼容性处理，它于css的关系类似于Babel和JavaScript的关系；
+- 主要是做 css 的兼容性处理，它于 css 的关系类似于 Babel 和 JavaScript 的关系；
 
 - 环境：`pnpm i postcss -D` ，通过`pnpm i postcss-cli -D` 来在终端中使用 postcss 命令；
 - 安装`postcss loader` 通过配置文件，简化 postcss 依赖的使用步骤；
@@ -276,7 +276,7 @@
         ];
         ```
 
-3. `copy-webpack-plugin`：将 public 本地静态资源文件（本身资源不需要打包）拷贝到webpack打包之后的静态资源目录；
+3. `copy-webpack-plugin`：将 public 本地静态资源文件（本身资源不需要打包）拷贝到 webpack 打包之后的静态资源目录；
 
    1. 使用方式及常见问题：
 
@@ -291,7 +291,7 @@
           },
         ],
       }),
-        
+   
        /**
        		一般不会指定复制到某个地址：to: "./xxx"，不指定时会被默认指向到输出目录下，避免了输出目录地址和指定地址的修改；
        */
@@ -301,7 +301,7 @@
 
    1. 以下两种方式都会在文件发生变化后对源代码进行整体的重新编译，对文件再次进行读写不能进行局部编译，存在不必要消耗；
 
-      - 在 package.json 文件中开启 **watch** 属性，默认为false；
+      - 在 package.json 文件中开启 **watch** 属性，默认为 false；
 
       - 在 config 配置文件中 build 命令中添加 --watch 命令；
 
@@ -336,7 +336,7 @@
         watchContentBase: true, // 监测 contentBase 指向文件是否发生了改变， 默认：false
         historyApiFallback: true, // 当页面产生404响应时，将页面重定向到index.html
       }
-      
+   
       // 入口文件：index.js
       /**
       	.accept() 接收两个参数：
@@ -345,12 +345,10 @@
       */
       if (module.hot){
       	module.hot.accept(['./xxxx','./yyyy'], ( )=>{
-          
+   
         })
       }
       ```
-      
-      
 
 5. `webpack-dev-middleware` ：自定义服务端启动命令，自由度更高。需要搭配 **express** 进行使用；
 
@@ -368,11 +366,11 @@
 
    ```js
    // webpack.config.js
-   
+
    entry: {
      main: { import: './src/main.js', dependOn: 'lodash' },
      lodash: 'lodash',
-       
+
      // 当依赖了多个包时：可以将需拆分的模块写成数组引入
      index: { import: './src/index.js', dependOn: 'shared' }
      shared: ['lodash', 'jquery']
@@ -398,28 +396,26 @@
      	minSize: 20000, // 默认值: 20000(约等于20kb)，如果被拆分的包并未达到设置的大小，则并不会被拆出来而是依旧被包含在出口文件内
     		maxSize: 20000, // 当拆包文件大于 20kb 时，按照minSize规定大小拆分
        // minChunks: 1, // 当目标依赖包需要被拆分成包，该文件必须被引用过 1 次，一般不会和minSize、maxSize同时使用
-       
+   
       // 其他配置具体详细信息：https://webpack.docschina.org/plugins/split-chunks-plugin/
      }
    }
    ```
 
-###　import动态导入
+###　 import 动态导入
 
-- `import ()` 动态导入相当于配置了splitCunks chunks 为asycn 做了异步打包
+- `import ()` 动态导入相当于配置了 splitCunks chunks 为 asycn 做了异步打包
 
 - 常用参数，其他配置详细信息： https://webpack.docschina.org/configuration/optimization/
 
   ```js
   optimization: {
-    chunkIds: 'named', 
+    chunkIds: 'named',
   }
   
   'natural' : 当前打包产物名称按照自然数进行编号排序，如果某个文档当前次不再被依赖那么重新打包时序号都会变。这将导致会被重新缓存，所以不利于浏览器的缓存机制，所以我们一般不去使用
   'named'  :  按照文件模块名称进行打包，在开发环境下介意使用，可以清除知道来源
   ```
-
-  
 
 ### runtimeChunk 优化配置
 
@@ -427,15 +423,13 @@
 
   ```js
   optimization: {
-    runtimeChunk: true, // 会将运行、模块加载和解析的部分拆分出来。该部分内容所包含的是类似于清单性的信息，记录了当前模块如何b被导入、导出的一些信息，便于浏览器做长期的缓存。
+    runtimeChunk: true, // 会将运行、模块加载和解析的部分拆分出来。该部分内容所包含的是类似于清单性的信息，记录了当前模块如何被导入、导出的一些信息，便于浏览器做长期的缓存。
   }
   
   // 当在多入口打包场景中：配置了多入口，并对统一文件进行了引用时，使用'true'会为每一个入口配置一份信息，使用'single'只会打包一份出来。
   ```
 
-  
-
 ###　术语：
 
-　1. chunk :  依赖
-　1. bundle  :  html 可以直接导入的资源
+1. chunk : 依赖
+　 1. bundle : html 可以直接导入的资源
